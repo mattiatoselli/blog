@@ -67,6 +67,7 @@ body {
   color: #212529;
   text-align: left;
   background-color: #fff;
+
 }
 
 [tabindex="-1"]:focus {
@@ -9476,10 +9477,10 @@ a.text-dark:hover, a.text-dark:focus {
 }
 .code-snippet{
   background: rgb(154,154,154);
-  background: linear-gradient(90deg, rgba(154,154,154,0.5833683815323004) 0%, 
-    rgba(134,134,134,0.5217437316723564) 35%, rgba(135,135,135,0.6477941518404237) 100%); 
-  font-family: nunito; 
-  border-radius: 4px; 
+  background: linear-gradient(90deg, rgba(154,154,154,0.5833683815323004) 0%,
+    rgba(134,134,134,0.5217437316723564) 35%, rgba(135,135,135,0.6477941518404237) 100%);
+  font-family: nunito;
+  border-radius: 4px;
   padding: 6px;
   padding: 30px;
 }
