@@ -127,20 +127,58 @@
                       Ogni modifica sarà più veloce perchè si andranno a fare delle leggere modifiche solo al servizio corrispondente.
                       Lo sviluppo di nuove funzionalità sarà più immediato e rapido, inoltre in qualunque momento ognuno dei servizi potrà essere ottimizzato
                       o potranno essergli allocate più risorse, se necessario (supponiamo per esempio che il nostro e-commerce cresca molto e abbia bisogno di aumentare le risorse perchè i server che si occupano
-                      di immagazzinare le referenze degli utenti siano sovraccaricati: in qualunque momento possiamo decidere di aumentare le risorse destinate solo a quel singolo servizio, per esempio aumentando la potenza dei server dedicati). 
+                      di immagazzinare le referenze degli utenti siano sovraccaricati: in qualunque momento possiamo decidere di aumentare le risorse destinate solo a quel singolo servizio, per esempio aumentando la potenza dei server dedicati).
                 </p>
 
-                <h4>Ma PHP n!</h4>
+                <h4>Container Linux e Docker: sicuri, veloci, semplici</h4>
                 <hr>
                 <p class="mb-5" style="text-align: justify;">
-                  Se mastichi un pò di programmazione, o se hai qualche amico sviluppatore, ti sarà sicuramente capitato di sentir dire che PHP è un linguaggio poco sicuro, pieno di bug e falle.
-                  La realtà è che, come in generale in tutto l'ambito informatico, la più grande vulnerabilità di un sistema sta tra il monitor e la sedia, ovvero è lo sviluppatore.
-                   La quasi totalità delle vulnerabilità note ha origine da mancati adempimenti delle best practice da parte dei programmatori e dai relativi abusi di particolari funzionalità.
-                   Inoltre PHP, proprio per la sua semplicità generalmente viene maneggiato da persone che non hanno l'adeguata esperienza e capacità in ambito di programmazione. Un ragazzo appena uscito dalle scuole superiori, sarà sicuramente in grado di scrivere un codice per il sito del proprio amico, ma se su questo sito ci dobbiamo far transitare dei dati di pagamento, forse rivolgerci a lui potrebbe non essere una buona idea.
-                   Un professionista serio e qualificato, saprà a quali tipi di attacchi questo sistema sarà soggetto, e sarà in grado di prendere le adeguate contromisure.
+                  Immagina di sviluppare un'applicazione. Lavori su un portatile e il tuo ambiente presenta una configurazione specifica.
+                  Altri sviluppatori potrebbero utilizzare configurazioni leggermente diverse.
+                  L'applicazione che stai sviluppando dipende da tale configurazione, oltre che da specifiche librerie, dipendenze e file.
+                  Al tempo stesso, gli ambienti di sviluppo e produzione della tua azienda presentano
+                  le proprie configurazioni standardizzate con set di file di supporto specifici. Desideri emulare tali
+                  ambienti il più possibile localmente, ma senza tutti i costi derivanti dalla creazione di nuovi ambienti server.
+                  A questo punto, è necessario trovare un modo semplice per far funzionare la tua app in questi ambienti,
+                  superare i controlli qualità e ottenere il deployment,
+                  senza dover riscrivere l'applicazione e correggere errori. In questo caso, i container sono la soluzione ideale.
+                  <br>
+                  <br>
+                  <strong>
+                    Il container che ospita la tua applicazione presenta le librerie, le dipendenze e i file necessari,
+                  il che ti consente di passare fino all'ambiente di produzione,
+                  senza alcun impatto negativo. Infatti, il contenuto di un'immagine container può essere paragonato
+                  all'installazione di una distribuzione Linux
+                </strong>
+                  poiché include pacchetti,
+                  file di configurazione e così via. La distribuzione di un'immagine container è,
+                  tuttavia, molto più semplice dell'installazione di nuove copie dei sistemi operativi (o di macchine virtuali).
+                  I container consentono di prevenire problemi.
+                  <br>
+                  <br>
+                  C'è di più: Rispetto alle macchine virtuali, un container Linux in esecuzione utilizza le risorse in modo meno intensivo,
+                  nel primo caso infatti, una macchina virtuale prende delle risorse dal sistema di host per replicare l'hardware ed eseguire un sistema operativo parallelo.
+                  Nel secondo, uno o più container condividono il kernel della macchina ospitante, ma lanciano una serie di processi e demoni completamente isolati dalla macchina ospitante.
+                  Mi rendo conto che tutto questo possa sembrare un argomento complicato (e lo è), ma <strong>al netto della teoria, quali sono i vantaggi pratici?</strong>
+                  <br>
+                  <strong>
+                    Anzitutto: un consumo minore di risorse e la portabilità, oltre alla semplicità con cui i container possono essere creati e distrutti.
+                  </strong>
+                  Creare, distruggere o modificare un container Linux è un processo facile e velocissimo, possiamo scegliere di rendere i cambiamenti
+                  effettivi fatti su un container, oppure distruggerlo e ricreare un ambiente completamente nuovo, il tutto in
+                  pochissimi secondi e con due comandi da terminale.
+                  <br>
+                  <strong>
+                    Tutta la potenza e la sicurezza di Linux.
+                  </strong>
+                  <br>
+                  <img src="../img/linux_power.jpg" alt="linux power" class="img-fluid">
+                  <br>
+                  I container sfruttano la potenza di Linux e la sua portabilità, possono esser fatti girare senza alcun problema su qualunque sistema operativo
+                  (anche Mac O Windows), con performance uguali a quelle native della macchina ospitante.
                 </p>
 
-                <h4>Perchè Laravel?</h4>
+                <h4>Docker: il costruttore di container</h4>
                 <hr>
                 <p class="mb-5" style="text-align: justify;">
                   <ul style="text-align: left;">1) E' un framework <strong>semplice.</strong></ul>
