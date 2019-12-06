@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Installare Laravel</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Articoli</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Su di me</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contattami</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Portfolio Section -->
+  <section class="page-section portfolio" id="portfolio" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <!-- Portfolio Modal - Text -->
+                <h4>Installiamo e configuriamo Laravel</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  In questo ultimo capitolo della nostra introduzione prenderemo dimistichezza con il file di configurazione della nostra macchina virtuale, modificheremo il nostro file Homestead.yaml, il file di host del computer, e installeremo Laravel connettendoci alla nostra macchina virtuale in ssh, imparando a lanciare comandi unix dal nostro computer.
+                </p>
+
+
+              <h4>Modificare il file di host del computer</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Per poter modificare il file di host da una macchina windows, ci converrà utilizzare un editor di testo.
+                  Questa è anche una buona occasione per decidere quali utilizzare, dato che per editare i file con estensione php potremo utilizzare i più disparati.
+                  La scelta è del tutto personale, io preferisco utilizzare <a href="https://www.sublimetext.com/">Sublime Text</a> per editare il codice html e css, mentre per i file php e Javascript uso <a href="https://code.visualstudio.com/">Visual Studio Code</a>. Su Linux l'ottimo Gedit è sempre una valida alternativa, ma avete a disposizione anche editor ed ide più forniti. Scegliete quello che più vi piace.
+                  <br>
+                  Fatta questa doverosa parentesi, dicevamo: per poter modificare il file di host da Windows ci occorrerà un editor di testo, una volta scaricato, clicchiamo con il tasto destro sulla sua icona ed avviamolo come amministratore di sistema, dopodichè andiamo ad aprire il file di host dal nostro editor. Perchè dobbiamo farlo? Perchè tutti i sistemi operativi non ci permettono di modificare questo file senza i permessi da amministratore. Su un sistema linux basterà lanciare da terminale il seguente comando:
+                  <div class="code-snippet">
+                    <strong>sudo gedit /etc/hosts</strong>
+                  </div>
+                  Su Windows dovremo aprire il file che si trova al percorso: <i>C:\Windows\System32\Drivers\etc\hosts</i>.
+                  <br><br>
+                  Una volta aperto il file, inseriamo la seguente stringa: "[Indirizzo IP macchina virtuale] laravel.local".
+                  <br>
+                  <strong>Cosa stiamo facendo?</strong>
+                  <br>
+                  Stiamo sostanzialmente dicendo al nostro computer: "Sappi che, ogni volta che io sulla barra degli url di un browser digiterò la stringa 'laravel.local', significa che vorrò effettuare una richiesta alla macchina con indirizzo IP che ti ho fornito prima di questa stringa."
+                  <br>
+                  Come indirizzo ip dovremo fornire quello che abbiamo messo nel file Homestead.yaml.
+                  <div>
+                    <img class="img-fluid" src="../img/file_hosts.png">
+                  </div>
+                </p>
+
+                <h4>Connettersi alla macchina virtuale tramite protocollo Secure Shell</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Da terminale, o da git bash, rechiamoci nella cartella in cui si trova il file vagrantfile, e avviamo la macchina virtuale col solito comando <i>vagrant up</i>.
+                  Una volta che la macchina è avviata, connettiamoci ad essa tramite il comando: <i>vagrant ssh</i>.
+                  <br>
+                  Il comando appena digitato ci permette di avviare una sessione di connessione con un protocollo SSH (Secure Shell), tra il nostro computer e la macchina cliente. In questo caso la Homestead che abbiamo installato. In parole povere questo cosa significa? Che ora abbiamo di fronte un terminale da cui lanciare comandi unix, questi comandi però non verranno eseguiti sulla nostra macchina, ma su quella vagrant.
+
+
+                </p>
+
+                <h4>Installare Laravel e mappare le cartelle della macchina virtuale</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Una volta avviata la sessione ssh, verifichiamo di trovarci nella cartella home/vagrant/.
+                  altrimenti navighiamo utilizzando i comandi unix <i>cd [nome cartella]</i>, <i>ls</i> per mostrare la lista delle cartelle, <i>pwd</i> per verificare in che cartella ci troviamo, <i>cd ..</i> per risalire l'albero delle cartelle e tronare indietro di una posizione.
+                  <br>
+                  Una volta nella cartella giusta lanciamo il seguente comando: <i>composer create-project laravel/laravel --prefer-dist Code/laravel</i>. Si tratta di una installazione piuttosto pesante, quindi potrebbe andare avanti per parecchi minuti, fatevi un caffè e aspettate :).
+                </p>
+
+                <h4>Complimenti!</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Non possiamo ancora dire di aver finito, ci manca un ultimo passaggio!
+                  Chiudiamo la connessione ssh tramite il comando <i>exit</i>. Torneremo nel terminale della nostra macchina fisica, da qui, lanciamo il comando <i>vagrant halt</i> per fermare la macchina virtuale.
+                  Apriamo il file Homestead.yaml e modifichiamolo come segue:
+                  <div>
+                  <img class="img-fluid" src="../img/homestead_yaml_file.png">
+                </div>
+                Se fate caso alla sezione "sites" vedrete come tramite i comandi "map:" e "to:" io stia dicendo alla macchina homestead, che la stessa stringa che io utilizzo nel mio file di host, fungerà da stringa che indicherà la cartella che funge da radice del progetto. Ogni volta che sul mio browser digiterò "laravel.local", il mio file di host saprà che voglio essere indirizzato verso quel determinato IP locale, a questo punto, la macchina homestead, vedendosi arrivare una richiesta con quella determinata stringa, sa che dovrà indirizzarmi verso il "sito" mappato dalla riga "to:".
+                <br>
+                <strong>NOTA BENE:</strong> poichè a volte il semplice reboot della macchina virtuale non fa "digerire" la nuova configurazione a vagrant, è sempre buona norma, una volta riavviata la macchina dopo una modifica del file Homestead, lanciare nuovamente il provisioning delle porte e dei siti tramite il comando: <i>vagrant provision</i>. Se doveste vedere nel prossimo passo che la richiesta non va a buon fine, vi consiglio di farlo, dovrebbe risolvere il problema.
+                <br>
+                Una volta fatta questa modifica siamo pronti, abbiamo installato Laravel e siamo pronti a farlo girare sulla nostra macchina. riavviamo il server di sviluppo, attendiamo che abbia completato le configurazioni, e una volta pronti, apriamo un tab del browser e cerchiamo: "laravel.local".
+                Se tutto è andato come previsto, dovreste trovarvi di fronte questa pagina.
+                <div>
+                  <img class="img-fluid" src="../img/laravel_home.png">
+                </div>
+                <strong>NOTA 2:</strong> su piattaforme Linux potrebbero verificarsi altri due problemi: il primo è che la pagina potrebbe restituire un errore 403 o 401, si tratta semplicemente di un problema di permessi dell'utente. per risolvere facilmente la cosa ci bastera lanciare da dentro la cartella laraproject il
+                comando <i>sudo chmod 776</i>. <br>
+              
+
+                Abbiamo finalmente installato Laravel, abbiamo scelto gli editor di testo preferiti, e abbiamo un intero server di sviluppo configurato e pronto all'uso. Possiamo finalmente cominciare il viaggio che ci porterà a sviluppare la nostra applicazione, che descriveremo nel capitolo 2.
+                </p>
+              </div>
+            </div>
+            <hr>
+
+
+            <a href="04_creare_un_progetto_laravel.html" style="align-self: right;">
+                <button class="btn btn-light" >
+                 <img src="https://img.icons8.com/ultraviolet/40/000000/left-squared.png"><br>
+                 <strong>Installare Homestead</strong>
+                </button>
+            </a>
+
+
+            <a href="../index.html" style="align-self: right;">
+                <button class="btn btn-light" >
+                <img src="https://img.icons8.com/wired/64/000000/home-page.png">
+                </button>
+            </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <!-- Footer Location -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Contattami</h4>
+          <p class="lead mb-0">toselli.mattia@gmail.com</p>
+        </div>
+
+        <!-- Footer Social Icons -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Seguimi</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+
+        <!-- Footer About Text -->
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Risorse utili</h4>
+          <p class="lead mb-0">Temi Bootstrap:
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <p class="lead mb-0">Guida ufficiale Laravel:
+            <a href="https://laravel.com/docs/4.2/introduction">Laravel docs</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; HCT Solutions 2019. Tutti i diritti riservati.</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>

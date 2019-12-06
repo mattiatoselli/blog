@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Creare un database di sviluppo in Laravel</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Articoli</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Su di me</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contattami</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Portfolio Section -->
+  <section class="page-section portfolio" id="portfolio" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <!-- Portfolio Modal - Text -->
+                <h4>Introduzione</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  In questa prima parte del tutorial vedremo come creare un database adatto allo sviluppo in locale del nostro progetto Laravel.
+                </p>
+
+
+              <h4>Creare un semplice database sqlite</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Qualunque web app per immagazzinare e mostrare dei dati necessita di un database. Ce ne sono diversi, ognuno coi propri punti di forza e limitazioni. Uno dei punti di forza di Laravel, è che offre connettori per praticamente qualunque database esistente.
+                  <br>
+                  Nel nostro esempio utilizzeremo <a href="https://www.sqlite.org/about.html">SQlite</a> come database di sviluppo. La scelta è dovuta al fatto che è particolarmente facile da configurare (anzi, non necessita di quasi nessuna configurazione). Si tratta di un prodotto agile, leggero e con delle buone performance per progetti piccoli e leggeri, e ha il pregio di essere libero ed open source.<br>
+                  Ovviamente, si tratta di una scelta adeguata per un ambiente di sviluppo, per ambienti di produzione la nostra scelta ricadrà invece su altri Database, in particolare, la Vagrant Box che abbiamo scaricato, implementa già due Database che vengono lanciati all'avvio della macchina. Postgres e MySQL.
+                  <br>
+                  Il vantaggio di utilizzare SQLite in questa fase, è che in qualunque momento, possiamo cancellare un singolo file, e ricreare da zero il nostro progetto. Per questo primo progettino di esempio andrà più che bene, quando sarà ora di andare in produzione ed effettuare il deploy della nostra applicazione della Laravel University, testeremo il tutto su un Db MySQL.
+                  <br>
+                  Connettere il nostro progetto ad un database è particolarmente facile in Laravel, se volete saltare immediatamente a configurazioni più complicate, vi consiglio di consultare <a href="https://laravel.com/docs/4.2/homestead">questo articolo sulla guida ufficiale</a> alla sezione "Connecting To Your Databases". <br>
+                  Se invece avete scelto di seguire questo tutorial, avviate la macchina vagrant e connettetevi tramite il comando <i>vagrant ssh</i>. <br>
+                  Una volta dentro, portatevi nella cartella <i>/database/</i> e date il comando <i>touch databade.sqlite</i>.
+                  Tornando alla radice del progetto, aprite il file .env (potete visualizzarlo con <i>ls -al</i>) con il comando <i>nano .env</i> e modificate il file togliendo tutte le righe che iniziano per DB, tranne la prima, che dovete sovrascrivere con: <i>
+                    DB_CONNECTION=sqlite
+                  </i>.
+                  <br>
+                  Per essere sicuri che tutto funzioni, una volta salvato e chiuso il file .env, lanciamo il comando <i>php artisan migrate</i>, vedremo nei prossimi tutorial a cosa servono i comandi artisan, quello che per ora ci interessa, è che dovreste vedere un messaggio che vi dice che le migrazioni sono state effettuate con successo e che sono state create delle tabelle nel database.
+                  <br>
+                  <strong>Nota:</strong> se il file .env non fosse presente nella macchina, potete comunque copiare il file .env.example dopo averlo creato, e poi modificare le informazioni in esso contenute.
+                </p>
+
+                <h4>Passare dati ad una vista, e primi passi con Blade</h4>
+                  <hr>
+                  <p class="mb-5" style="text-align: justify;">
+                    Prima di imparare ad usare i controllers e i modelli, iniziamo ad impratichirci con un assaggio di cosa possiamo fare con Blade.
+                    Generalmente, un approccio che trovo sia vincente in questo genere di sviluppi, è sempre iniziare a creare una pagina con dei dati di test per vedere "come verrebbe", e per verificare che tutto sia in ordine.
+                    <br>
+                    Per prima cosa, modifichiamo il file <i>routes/web.php</i> e la vista <i>home.blade.php</i> coi codici proposti: <br>
+                    <img src="../img/esempio_controller_pass_data01.png" class="img-fluid">
+                    <br>
+                    All'Url <i>laravel.local/home</i> dovremmo vedere una lista dei nomi che abbiamo messo nel vettore $persons del file web.php.
+                    <strong>Nel routing abbiamo creato delle variabili di contesto</strong> e le abbiamo passate insieme alla vista come risposta all'utente. Presto impareremo come creare le varibili di contesto utilizzando dati residenti nel nostro database.
+                    Quello che ci interessa, però, è vedere come abbiamo renderizzato queste variabili di contesto, ovvero il titolo e la lista delle persone. <br>
+                    Nel file home.blade.php, facciamo la conoscenza con le nostre prime direttive in Blade. Le variabili di contesto vengono renderizzate con la notazione {{ $chiave_variabile_di_contesto }}, nel nostro caso la variabile $title, che veniva passata alla vista con chiave 'title', era una stringa 'home', ed infatti se ci fate caso, il titolo della pagina nel tab del browser sarà esattamente quello.
+                    l'altra direttiva con cui facciamo la conoscenza è <strong>@foreach()</strong>, che permette di eseguire un loop su una lista di oggetti. <br>
+                    Nel nostro caso, dopo aver creato una lista di stringhe, la passiamo alla vista come variabile di contesto, dopodichè, diciamo a Laravel di ciclare su quella lista, utilizzando come nome per la variabile attuale $person, e di stamparla, dopodichè chiudiamo il foreach.
+                    Per una maggiore comprensione di tutte le direttive possibili disponibili in Blade, consiglio una veloce lettura <a href="https://laravel.com/docs/5.8/blade">Della guida ufficiale</a>, almeno della parte riguardante le direttive per le iterazioni, le esecuzioni condizionali, e la stampa dei valori.
+                  </p>
+                  <h4>Creiamo un controller</h4>
+                    <hr>
+                    <p class="mb-5" style="text-align: justify;">
+                      Analizziamo meglio il codice che abbiamo scritto nel file web.php: <br>
+                      Laravel, quando riceve una richiesta HTTP con metodo GET all'URL ./home esegue una callback, e restituisce come risposta una vista.
+                      In questo caso, il metodo era piuttosto corto, ma immaginiamoci in una situazione reale: la nostra applicazione avrà magari decine di possibili URL a cui accedere, e magari ad ognuno di questi potranno arrivare richieste GET, POST, PUT, DELETE e  vari altri metodi HTTP. Va da se che avere la logica e le query
+                      verso il database in un unico file sarebbe abbastanza confusionario, e non in linea con la pulizia del codice tanto cara a Laravel. <br>
+                      Qui, interviene la seconda mattonella della architettura MVC, la prima erano le viste, ora vedremo cosa sono i controllers. <br>
+                      Invece di definire tutta la logica di gestione delle richieste nei file di routing, è possibile (e personalmente direi OBBLIGATORIO)
+                      organizzare questo comportamento utilizzando le classi Controller.
+                      I controller possono raggruppare la logica di gestione delle richieste correlate in un'unica classe.
+                      I controller sono memorizzati nella directory app/Http/Controllers. <br>
+                      Generalmente un approccio che si tende a utilizzare, è quello di definire un Controller per ogni entità del nostro database, ovvero per ogni modello. Poichè non ne abbiamo ancora definiti,
+                      per ora accontentiamoci di sapere che il nostro piccolo applicativo di esempio avrà sostanzialmente 3 entità: Contatti, Telefono, Email.
+                      Ogni contatto potrà avere più numeri di Telefono e più Email associate.
+                      <br>
+                      Qui interviene una funzionalità interessante di Laravel: la possibilità di creare i controllers tramite php artisan. Abbiamo già fatto la conoscenza di questo potente strumenti
+                      quando abbiamo effettuato la prima migrazione del database. <br>
+                      <strong>Senza perdere altro tempo, creiamo il nostro primo controller</strong>. <br>
+                      <li>Connettiamoci alla homestead con <i>vagrant ssh</i> dopo aver avviato la macchina.</li>
+                      <li>Una volta nella radice del progetto, diamo il seguente comando: <i>php artisan make:controller ContactsController.</i></li>
+                      Nella cartella /app/Http/Controllers, verrà generato un file
+                      con il nome che abbiamo inserito nel comando, apriamolo e modifichiamo questo ed il file web.php come da immagine sottostante.
+                      <br>
+                      <img src="../img/esempio_controller_pass_data02.png" class="img-fluid">
+                      <br>
+                      Notate niente? Ebbene si, abbiamo spostato tutta la logica sul controller, mentre il routing si occupa solamente di ricevere la richiesta, e
+                      successivamente di richiamare il corretto metodo dal corretto controller tramite la sintassi CONTROLLER@FUNZIONE.
+                      <br>
+                      Cercate di impratichirvi bene con questo pattern, perchè lo seguiremo da qui alla fine del nostro viaggio, e se mai vi troverete a lavorare con laravel
+                      sarà un pattern che vi accompagnerà in tutto il tempo che passerete su questo framework. Personalmente, lo adoro!
+                    </p>
+                    <h4>Creiamo un modello</h4>
+                      <hr>
+                      <p class="mb-5" style="text-align: justify;">
+                        Un elemento fondamentale delle applicazioni web è la possibilità di rendere i dati persistenti in un database. Generalmente, a meno di esigenze particolari
+                        si tende ad organizzare i dati in dei database relazionali.
+                        Il design di un database relazionale può essere visto come una serie di tabelle interconnesse tra di loro, ogni tabella costituisce un <i>oggetto</i>, o <i>modello</i>.
+                        Le colonne sono i campi che compongono un oggetto, mentre le righe sono i singoli record.
+                        Se ad esempio proviamo ad immaginarci il database di una libreria, avremo un modello "Libro", che conterrà delle informazioni, come ad esempio l'autore, il codice ISBN, la versione di stampa, lo stato, il riassunto, il numero di pagine.
+                        Ogni singolo libro sarà un record della tabella.
+                        Il design di un database (o modello dati), è un compito che richiede esperienza, pazienza e ottime conoscenze di quello che si sta sviluppando, è un processo non banale e che richiede molta attenzione, tanto
+                        che esistono tonnellate di libri, pattern e metodologie sull'argomento, per questo non ci addentreremo nella teoria.
+                        Posso solamente dirvi questo: perdeteci molto, molto tempo! Il design di una buona struttura dati vi eviterà parecchi mal di pancia.
+                        Una regola generale, da tenere bene a mente è di scomporre il più possibile le entità e poi relazionarle fra loro, se avete un oggetto con venti campi, forse sarebbe il caso di chiedersi se magari non sarebbe opportuno scomporlo in oggetti più piccoli.
+                        <br>
+                        Fatta questa doverosa digressione, concentriamoci sul compito che ci siamo proposti: vogliamo creare il nostro primo modello, ovvero la tabella che dovrà contenere i dati dei nostri contatti.
+                        <strong>La prima cosa da tenere a mente, è che per convenzione un modello deve avere come nome il nome della singola entità,</strong> nel nostro caso, poichè stiamo parlando di contatti (Contacts),
+                        il nostro modello si chiamerà <i>Contact</i>. <br>
+                        Creare un modello è semplice, esattamente come per quando abbiamo lanciato il comando di creazione del controller, connettiamoci in ssh alla macchina virtuale, e dalla root del progetto lanciamo il seguente comando:
+                        <br>
+                        <i>php artisan:make model Contact -m</i>. <br>
+                        Questo comando creerà un file nella directory ./database/migrations con un nome simile a questo: <i>2019_11_23_221452_create_contacts_table.php</i>.
+                        Questo file, una volta che avremo effettuato le migrazioni, creerà una nuova tabella nel nostro DB, per cui, possiamo andare a definire le colonne
+                        del nostro oggetto Contatto. Per maggiori informazioni sulla creazione di tabelle in Laravel, <a href="https://laravel.com/docs/5.8/migrations#creating-tables">qui trovate il solito link alla documentazione ufficiale</a>.
+                        <br>
+                        I contatti dovranno contenere tre stringhe Nome, Cognome, e gruppo (amici, parenti, sport, lavoro, altro).
+                        Tramite questo file, prima di effettuare la migrazione possiamo andare a definire quali saranno le colonne.
+                        <br>
+                        <img src="../img/contactModel.png" alt="img-fluid">
+                        <br>
+                        Come ultimo passaggio, effettuiamo la migrazione con <i>php artisan migrate</i>.
+                        <strong>
+                        <i>
+                          Ci siamo! abbiamo creato il nostro primo modello! Ora possiamo aggiungere e creare dei contatti, cancellarli, e modificarli!
+                          <br>
+                          Nel prossimo capitolo impareremo come utilizzare la riga di comando per inserire dei dati di prova nel nostro database, come effettuare delle query,  e come aggiungere altri campi al nostro DB.
+                          <a href="../index.html">Torna alla home</a>.
+                        </i>
+                        </strong>
+
+
+                      </p>
+              </div>
+            </div>
+            <hr>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <!-- Footer Location -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Contattami</h4>
+          <p class="lead mb-0">toselli.mattia@gmail.com</p>
+        </div>
+
+        <!-- Footer Social Icons -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Seguimi</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+
+        <!-- Footer About Text -->
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Risorse utili</h4>
+          <p class="lead mb-0">Temi Bootstrap:
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <p class="lead mb-0">Guida ufficiale Laravel:
+            <a href="https://laravel.com/docs/4.2/introduction">Laravel docs</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; HCT Solutions 2019. Tutti i diritti riservati.</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>

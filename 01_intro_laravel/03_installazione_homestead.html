@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Configurare una macchina virtuale</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Articoli</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Su di me</a>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contattami</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Portfolio Section -->
+  <section class="page-section portfolio" id="portfolio" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <!-- Portfolio Modal - Text -->
+                <h4>Installare e configurare Homestead Improved</h4>
+                <hr>
+                <img class="img-fluid" src="../img/github.png" alt="Logo github">
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Siamo quasi in dirittura di arrivo, cosa ci manca prima di iniziare a programmare?
+                  <strong>Dobbiamo ancora scaricare una macchina virtuale (o box), adatta a sviluppare con Laravel.
+                  Ovviamente, nulla ci vieta di creare da zero un sistema per farlo, ma perchè reinventare la ruota, quando abbiamo a disposizione così tante macchine già pronte all'uso?</strong>
+                  E' la bellezza dell'open source!
+                  <br><br>
+                  Ci serviremo di Github, di cosa si tratta?<br>
+                  La definizione non è semplicissima, possiamo pensarlo come un social per professionisti, diventato molto popolare tra coloro che lavorano in ambito informatico perchè permette, tra le varie cose, di creare delle repository con git, su cui effettuare un versionamento del codice, collaborare a progetti comuni in remoto, impostare accessi alle proprie cartelle, e così via.
+                  <strong>Sebbene non sia il cardine di questo tutorial, imparare ad utilizzare github, spesso fa la differenza tra un buon sviluppatore ed uno sviluppatore che ha bisogno di fare esperienza.</strong>
+                  <br><br>
+                  Perchè lo citiamo? per due motivi: <br>
+                  1) Più avanti nel nostro progetto, lo utilizzeremo per versionare il nostro codice e per effettuare il lancio in un ambiente online su un server della nostra applicazione web.<br>
+                  2) Perchè su github è hostata una box che ci interessa.
+                  <br>
+                  <br>
+                  Senza ulteriori indugi, se siamo su Linux o Mac, apriamo un terminale, mentre se siamo su Windows apriamo l'applicazione git bash, che abbiamo installato nel preedente tutorial installando Git.
+                  <br>
+                  Git Bash è una applicazione che ci consente di lanciare in ambiente Windows comandi Unix, da questo momento in poi, quindi, tutti i comandi saranno uguali a prescindere dal nostro sistema operativo.
+                  Vi consiglio di prendere la mano ad utilizzare i comandi Unix di base, perchè nella vita dello sviluppatore vi troverete a digitarne parecchi.
+
+                  <div class="code-snippet">
+                    <p class="mb-5" style="text-align: justify;">
+                    utente@PCMATTIA MINGW64 /d<br>
+                    <strong>$: mkdir laraproject<br></strong>
+                  </p>
+                  </div>
+                  <br>
+                  Con questo comando creiamo una cartella di nome "laraproject" nella cartella attuale in cui ci troviamo, nel mio caso, nella radice della partizione D: del disco, nel vostro caso, scegliete quella più comoda per voi.<br>
+                  Entriamo nella cartella.
+                  <br>
+                  <div class="code-snippet">
+                    <p class="mb-5" style="text-align: justify;">
+                    <strong>cd laraproject</strong>
+                  </p>
+                  </div>
+                  <br>
+                  Una volta dentro la cartella, lanciamo lo scaricamento da github di una box adatta a sviluppare in Laravel.
+                  <div class="code-snippet">
+                    <p class="mb-5" style="text-align: left;">
+                    <strong>$ git clone https://github.com/Swader/homestead_improved.git laraproject<br></strong>
+                    Cloning into 'laraproject'...<br>
+                    remote: Enumerating objects: 192, done.<br>
+                    Receiving obremote: Total 192 (delta 0), reused 0 (delta 0), pack-reused 192<br>
+                    Receiving objects: 100% (192/192), 48.13 KiB | 1.15 MiB/s, done.<br>
+                    Resolving deltas: 100% (110/110), done.<br>
+                  </p>
+                  </div>
+                  <br>
+                  Con questo comando abbiamo creato una prima macchina virtuale nella cartella indicata dopo il link.
+                  Proseguiamo con i comandi, entriamo nella cartella e visualizziamo i file al suo interno.
+                  <br>
+                  <div class="code-snippet">
+                    <p class="mb-5" style="text-align: justify;">
+                    <strong>$ cd laraproject <br></strong>
+                    <strong>$ ls<br></strong>
+                    after.sh*  bin/           composer.lock  Homestead.yaml  readme.md  src/<br>
+                    aliases    composer.json  homestead*     LICENSE.txt     scripts/   Vagrantfile<br>
+                  </p>
+                  </div>
+                  <br>
+                  assicuriamoci di essere dentro la cartella in cui è stata creata la macchina virtuale.
+                  Come facciamo a sapere che è quella giusta?
+                  <strong>Utilizzando il comando "ls" possiamo vedere le cartelle ed i file contenuti nella posizione attuale, assicuriamoci di vedere tra questi un file nominato "Vagrantfile"</strong> e avviamo la macchina virtuale. Se è la prima volta che viene avviata, ci vorrà un pò, e dipende anche dalla velocità della nostra connessione a internet. Se tutto va correttamente, dovremmo avere il terminale che ci da i seguenti messaggi.
+                  <strong>Nota:</strong> alle volte può capitare su macchine windows o linux che avviando vagrant venga visualizzato un messaggio di errore in cui viene detto che virtualbox solleva una eccezione dovuta al fatto che non è l'unico boot presente, ciò è dovuto al fatto che le macchine più moderne implementano a livello UEFI una funzione di secure boot.
+                  <br>
+                  Per risolvere la cosa, basterà disabilitare il secure boot della propria macchina, una rapida ricerca su Google dovrebbe aiutarvi a capire come fare, qui non ci dilungheremo perchè differisce leggermente da macchina a macchina.
+                  <div class="code-snippet">
+                    <p class="mb-5" style="text-align: justify;">
+                   <strong>$ vagrant up</strong><br>
+                    Bringing machine 'default' up with 'virtualbox' provider...<br>
+                    ==> default: Checking if box 'laravel/homestead' version '6.4.0' is up to date...<br>
+                    ==> default: Vagrant has detected a configuration issue which exposes a<br>
+                    ==> default: vulnerability with the installed version of VirtualBox. The<br>
+                    ==> default: current guest is configured to use an E1000 NIC type for a<br>
+                    ==> default: network adapter which is vulnerable in this version of VirtualBox.<br>
+                    ==> default: Ensure the guest is trusted to use this configuration or update<br>
+                    ==> default: the NIC type using one of the methods below:<br>
+                    ==> default:
+                    ==> default:   https://www.vagrantup.com/docs/virtualbox/configuration.html#default-nic-type<br>
+                    ==> default:   https://www.vagrantup.com/docs/virtualbox/networking.html#virtualbox-nic-type<br>
+                    ==> default: Clearing any previously set network interfaces...<br>
+                    ==> default: Preparing network interfaces based on configuration...<br>
+                        default: Adapter 1: nat<br>
+                        default: Adapter 2: hostonly<br>
+                    ==> default: Forwarding ports...<br>
+                        default: 80 (guest) => 8000 (host) (adapter 1)<br>
+                        default: 443 (guest) => 44300 (host) (adapter 1)<br>
+                        default: 3306 (guest) => 33060 (host) (adapter 1)<br>
+                        default: 5432 (guest) => 54320 (host) (adapter 1)<br>
+                        default: 8545 (guest) => 8545 (host) (adapter 1)<br>
+                        default: 30301 (guest) => 30301 (host) (adapter 1)<br>
+                        default: 30302 (guest) => 30302 (host) (adapter 1)<br>
+                        default: 30303 (guest) => 30303 (host) (adapter 1)<br>
+                        default: 30304 (guest) => 30304 (host) (adapter 1)<br>
+                        default: 30305 (guest) => 30305 (host) (adapter 1)<br>
+                        default: 30306 (guest) => 30306 (host) (adapter 1)<br>
+                        default: 22 (guest) => 2222 (host) (adapter 1)<br>
+                    ==> default: Running 'pre-boot' VM customizations...<br>
+                    ==> default: Booting VM...<br>
+                    ==> default: Waiting for machine to boot. This may take a few minutes...<br>
+                        default: SSH address: 127.0.0.1:2222<br>
+                        default: SSH username: vagrant<br>
+                        default: SSH auth method: private key<br>
+                        ......<br>
+                      </p>
+                  </div>
+                  In alcuni casi potrebbe capitare che il terminale ci fornisca un messaggio di errore del tipo "Vagrant network collides with a non-hostonly network".
+                  In questo caso dovremo andare ad editare il file di nome Homestead.yaml.
+                  Modifichiamo l'indirizzo ip locale a cui verrà mappata la macchina virtuale. Nel tutorial successivo avremo modo di maneggiare questo file e spiegheremo a cosa serono tutte le info contenute in esso. Per ora accontentiamoci di fornire un altro indirizzo ip.
+                  Riavviamo la macchina virtuale digitando i comandi "vagrant halt" per fermarla, e poi nuovamente "vagrant up".
+                  <br>
+                  <img class="img-fluid" src="../img/edit_ip_homestead.JPG">
+                  <br>
+                  Ora vogliamo testare che la macchina funzioni, per farlo, creiamo nella cartella "laraproject" un'altra cartella e la nominiamo "Project", dentro di essa un'altra cartella "public", entriamo in quest'ultima e creiamo un file index.php. Al suo interno inseriamo un messaggio di test:
+                  <img class="img-fluid" src="../img/testing_index_php.JPG"><br>
+                  Se ora nella barra dell'url inseriamo l'indirizzo ip mappato dal file Homestead.yaml, dovremmo vedere il nostro messaggio di test.
+                </p>
+
+                <h4>Ci siamo quasi!</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Nella prossima lezione, concluderemo finalmente la configurazione del nostro ambiente di sviluppo! Impareremo a maneggiare il file Homestead.yaml, ed inizializzeremo un nuovo progetto Laravel.
+                  Tieni duro, ci sei quasi!
+                </p>
+              </div>
+            </div>
+
+
+              </div>
+            </div>
+            <div class="container">
+
+            <a href="02_vagrant_e_virtualbox.html" style="align-self: right;">
+                <button class="btn btn-light" >
+                 <!--<img src="https://img.icons8.com/cute-clipart/64/000000/circled-chevron-right.png">-->
+                 <img src="https://img.icons8.com/ultraviolet/40/000000/left-squared.png"><br>
+                 <strong>Installare vagrant e virtualbox</strong>
+                </button>
+                </a>
+
+                <a href="04_creare_un_progetto_laravel.html" style="align-self: right;">
+                <button class="btn btn-light" >
+                 <img src="https://img.icons8.com/ultraviolet/40/000000/right-squared.png"><br>
+                 <strong>Creare un progetto Laravel</strong>
+                </button>
+                </a>
+            </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <!-- Footer Location -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Contattami</h4>
+          <p class="lead mb-0">toselli.mattia@gmail.com</p>
+        </div>
+
+        <!-- Footer Social Icons -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Seguimi</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+
+        <!-- Footer About Text -->
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Risorse utili</h4>
+          <p class="lead mb-0">Temi Bootstrap:
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <p class="lead mb-0">Guida ufficiale Laravel:
+            <a href="https://laravel.com/docs/4.2/introduction">Laravel docs</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; HCT Solutions 2019. Tutti i diritti riservati.</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>
