@@ -1,4 +1,6 @@
-# [Kernel.it]
+# Kernel.it - Progetto:
+Il progetto si pone come una community open source dove poter avere accesso a risorse facilmente consultabili,
+tutorial completi ed interessanti disponibili alla commmunity italiana degli sviluppatori, rigorosamente in italiano, in modo da poter abbattere alcune delle barriere linguistiche o tecniche dei novizi o degli sviluppatori più anziani.
 
 
 ## Preview
