@@ -1,7 +1,6 @@
-# Kernel.it - Progetto:
-Il progetto si pone come una community open source dove poter avere accesso a risorse e
-tutorial completi disponibili alla community italiana degli sviluppatori.
-I tutorial sono rigorosamente in italiano, in modo da poter abbattere alcune delle barriere linguistiche o tecniche dei novizi o degli sviluppatori più anziani.
+# Kernel.it - Progetto
+Il progetto si pone come obiettivo costruire una community open source dove poter avere accesso a risorse e
+tutorial completi disponibili, rigorosamente in italiano, in modo da poter abbattere alcune delle barriere linguistiche o tecniche dei novizi o degli sviluppatori più anziani.
 
 
 ## Progetti attualmente in sviluppo
