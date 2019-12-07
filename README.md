@@ -12,9 +12,14 @@ In questa sezione sono riportati i vari tutorial attualmente in sviluppo:
 * Nessun progetto completato al momento
 
 
-### Regole di stile del sito
+## Regole di stile del sito
 
 
-## Copyright and License
+# Copyright and License
 Kernel.it utilizza un tema di base rilasciato sotto licenza MIT dalla Blackrock Digital LLC. Ogni apporto al progetto è ben accetto, per contattare il capo del progetto consultare la sezione sottostante.
 Ogni vandalizzazione del progetto verrà perseguita ai termini di legge.
+* Il progetto è rilasciato sotto licenza MIT ed è liberamente scaricabile e modificabile.
+* Ogni modifica dovrà essere approvata dal capo del progetto prima di diventare effettiva.
+
+# Contatti e contributi
+* Mattia Toselli - Fondatore del Progetto - toselli.mattia@gmail.com
