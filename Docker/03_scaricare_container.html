@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Comandi basilari di Docker</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <section class="page-section portfolio" id="portfolio" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <!-- Portfolio Modal - Text -->
+                <h4>Cosa faremo</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  In questo primo esempio scenderemo nel pratico e approfitteremo per familiarizzare con Docker.
+                  Impareremo a scaricare container, inizalizzarli, resettarli, distruggerli e crearne di customizzati.
+                  Una volta che ci saremo impratichiti con il loro uso, nei capitoli successivi impareremo ad utilizzare reti di container,
+                  come piccolo progetto, successivamente, creeremo un cluster di container in cui avremo due server php, collegati a un database mysql,
+                  e un server Nginx come unico punto di accesso che funge da load balancer e da proxy.
+                </p>
+
+
+              <h4>Immagini e containers</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  <strong>Prima di tutto procediamo con ordine e spieghiamo la differenza tra una immagine ed un container.</strong>
+                  Quando scarichiamo una "macchina docker", oppure ci viene passato un file contenente una macchina virtualizzata, stiamo parlando di una immagine.
+                  Essa è residente nel nostro computer, a meno che non decidiamo di eliminare l'immagine. Immaginiamo per esempio di scaricare Nginx, una volta che abbiamo la nostra
+                  <strong>immagine di Nginx</strong> possiamo avviarne una istanza in ascolto su qualche porta dell'host, quello è un container, ma possiamo decidere di avviarne anche più di una istanza, in quel caso la nostra immagine rimane sempre una (Nginx, appunto),
+                  ma avremo più containers con la stessa immagine.
+                  <strong>Per intenderci, è un po' come la differenza tra un oggetto ed una istanza di un oggetto nei paradigmi di programmazione ad oggetti.</strong><br>
+                  Vediamo subito di cosa sto parlando.
+                </p>
+
+                <h4>Scaricare immagini Docker da DockerHub</h4>
+                  <hr>
+                  <p class="mb-5" style="text-align: justify;">
+                    <i>La domanda sorge spontanea: ma la mia immagine devo costruirla da zero?</i>
+                    Si può anche fare. Ma generalmente non è la via migliore.
+                    <i>E allora dove troviamo delle immagini già pronte?</i>
+                    Su DockerHub, di cui vi lascio il link <a href="https://hub.docker.com/">qui.</a>
+                    Una rapida ricerca di cosa vogliamo ci darà accesso alle immagini che ci servono.
+                    Vogliamo un server Apache? esiste.
+                    Nginx? Anche.
+                    Una macchina con già installato e configurato mysql? C'è.
+
+                    <br>
+                    Come potete ben immaginare, la soluzione migliore è partire da delle macchine standard, e poi creare ciò che serve a noi.
+                    <br>
+                    <strong>
+                      Senza indugiare cominciamo e cerchiamo Nginx tra le immagini disponibili,
+                      per qualunque problema vi consiglio di consultare la
+                      <a href="https://hub.docker.com/_/nginx">documentazione ufficiale.</a>
+                    </strong>
+
+                  </p>
+              </div>
+            </div>
+            <hr>
+            <a href="01_introduzione.html" style="align-self: right;">
+                <button class="btn btn-light" >
+                 <img src="https://img.icons8.com/ultraviolet/40/000000/left-squared.png"><br>
+                 <strong>Introduzione a Docker</strong>
+                </button>
+            </a>
+            <a href="03_scaricare_container.html" style="align-self: right;">
+                <button class="btn btn-light" >
+                 <img src="https://img.icons8.com/ultraviolet/40/000000/right-squared.png"><br>
+                 <strong>Scaricare ed eseguire un container</strong>
+                </button>
+            </a>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <!-- Footer Location -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Contattami</h4>
+          <p class="lead mb-0">toselli.mattia@gmail.com</p>
+        </div>
+
+        <!-- Footer Social Icons -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Seguimi</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+
+        <!-- Footer About Text -->
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Risorse utili</h4>
+          <p class="lead mb-0">Temi Bootstrap:
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <p class="lead mb-0">Guida ufficiale Laravel:
+            <a href="https://laravel.com/docs/4.2/introduction">Laravel docs</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; HCT Solutions 2019. Tutti i diritti riservati.</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>
