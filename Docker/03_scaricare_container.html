@@ -95,8 +95,49 @@
                     <br>
                     Una volta lanciati questi due comandi riavviate il sistema per renderli effettivi.
                     <br>
-                    <i><strong>$ docker run --name some-nginx -v /some/content:/usr/share/nginx/html:ro -d nginx</strong></i>
-
+                    <i><strong>$ docker pull nginx</strong></i>
+                    <br>
+                    Una volta completate tutte le operazioni di scaricamento, possiamo fare un rapido controllo delle immagini presenti nel nostro sistema tramite:
+                    <br>
+                    <i> <strong>docker images -a</strong> </i>
+                    <br>
+                    Dovremmo vederne solo una presente.
+                    Possiamo quindi iniziare a prendere dimistichezza con la sintassi dei comandi Docker. Una rapida occhiata alla documentazione
+                    dovrebbe essere sufficiente per iniziare, ma esistono alcuni trucchetti che si imparano con l'esperienza.
+                    A questo punto, prima di iniziare, permettiamoci una piccola digressione per capire meglio cosa stiamo per fare.
+                    <br>
+                    <strong>Per chi è completamente digiuno di conoscenze sui server: che cos'è Nginx?</strong>
+                    <br>
+                    Nginx (si pronuncia Engine X), è un server web open source ad alte prestazioni disponibile per vari sistemi Unix e
+                    Unix-like e Windows. Sviluppato inizialmente da Igor Sysoev e rilasciato nel 2004 con licenza BSD,
+                    nginx è stato concepito con lo scopo esplicito di essere più performante del
+                    web server Apache. La sua architettura ad eventi, infatti, esibisce prestazioni consistenti in presenza di carichi elevati,
+                    con maggiore efficienza rispetto al modello multi-threaded adottato da Apache.
+                    Nginx fu sviluppato con l’obiettivo di risolvere il famoso problema C10k,
+                    ovvero creare un server in grado di gestire più di diecimila client contemporaneamente
+                    senza osservare una degradazione delle prestazioni.
+                    È bene precisare, comunque, che nginx non è soltanto un server web.
+                    Esso infatti può agire da reverse proxy, da proxy TCP/UDP, da e-mail proxy e da load balancer.
+                    Queste caratteristiche ne hanno favorito una larga diffusione, impiegandolo soprattutto come reverse proxy o load balancer.
+                    <strong>Non ci addentreremo troppo nei tecnicismi riguardanti Nginx in questo corso, ci basti sapere queste poche informazioni sopra presenti.</strong>
+                    <br>
+                    <br>
+                    <strong>Enough talking: iniziamo a fare sul serio!</strong>
+                    <br>
+                    <br>
+                    Apriamo un terminale e digitiamo:
+                    <br>
+                    <strong><i>$ docker run --name nginx001 -d -p 8080:80 nginx</i></strong>
+                    analizziamo tutti i comandi che vengono passati:
+                      <li> <i>docker run</i> permette di laciare un singolo container a partire da una immagine. </li>
+                      <li> <i>--name nginx001</i> permette di assegnare un nome al container, è opzionale.</li>
+                      <li> <i>-d</i> avvia il container in modalità non interattiva.
+                        Se non specificato, verrà visualizzata una serie di log durante l'avvio.
+                       </li>
+                       <li> <i>-p 8080:80</i> <strong>Questo è forse quello che cin interessa di più.</strong> Permette di effettuare il forwarding delle porte, ovvero di "mappare"
+                       le porte della macchina host con quelle del container.</li>
+                       Per quanto riguarda l'ultimo comando, stiamo dicendo a Docker di mappare la porta 80 (http) con una delle nostre porte libere, in questa caso la 8080.
+                       Una rapida visita tramite brouser al nostro ip locale: http://localhost:8080, ci presenterà la pagina di benvenuto del server.
                   </p>
               </div>
             </div>
