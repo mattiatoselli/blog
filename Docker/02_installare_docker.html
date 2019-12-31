@@ -18,6 +18,10 @@
   <!-- Theme CSS -->
   <link href="../css/freelancer.css" rel="stylesheet">
 
+  <!-- highlighter syntax -->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/styles/default.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.17.1/build/highlight.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -42,56 +46,69 @@
                 <hr>
                 <p class="mb-5" style="text-align: justify;">
                   <strong>Sebbene Docker sia perfettamente compatibile con tutti  i SO, in questa guida utilizzaremo Linux, ed in particolare Ubuntu.</strong>
-                  Il motivo principale è dovuto al fatto che i container sono generalmente basati su distribuzioni minimali Debian based, di conseguenza lavorare con lo stesso ambiente
-                  a livello mentale ne giova, ma è una soluzione del tutto personale, nulla vieta di usare altro, i comandi cambiano solo in minima parte, su Mac (non serve l'utente sudo), mentre su Windows vi basterà scaricare Git Bash per emulare il terminale Linux.
+                  Il motivo principale è dovuto al fatto che i container sono generalmente basati su distribuzioni minimali Linux, poichè ne sfruttano l'isolamento del kernel.
+                  Trovo che lavorare con lo stesso ambiente
+                  a livello mentale sia un toccasana,
+                  ma è una soluzione del tutto personale, nulla vieta di usare altro,
+                  i comandi cambiano solo in minima parte.
                 </p>
-
-
-              <h4>Installare Docker da terminale</h4>
+                <hr>
+              <strong>Installare Docker da terminale</strong>
                 <hr>
                 <p class="mb-5" style="text-align: justify;">
                   Per prima cosa, è sempre buona norma aggiornare il database dei repository di apt. Lanciamo i comandi:
-                  <br>
-                  <i><strong>$ sudo apt update</strong></i>
-                  <br>
-                  <i><strong>$ sudo apt-get update</strong></i>
-                  <br>
-                  <i><strong>$ sudo apt autoremove</strong></i>
-                  <br>
-                  Per sicurezza, rimuoviamo anche le possibili vecchie versioni di Docker.
-                  <br>
-                  <i><strong>$ sudo apt-get remove docker docker-engine docker.io</strong></i>
-                  <br>
-                  Ora, installiamo Docker:
-                  <br>
-                  <i><strong>$ sudo apt-get install docker.io</strong></i>
-                  <br>
-                  Una volta completato lo scaricamento e l'installazione, dobbiamo fare in modo che il servizio
-                  docker parta ad ogni avvio del sistema.
-                  <br>
-                  <i><strong>$ sudo systemctl start docker</strong></i>
-                  <br>
-                  <i><strong>$ sudo systemctl enable docker</strong></i>
-                  <br>
-                  Possiamo controllare la versione di Docker con il comando:
-                  <br>
-                  <i><strong>$ docker -v</strong></i>
-                  <br>
-                  Per verificare che il servizio docker sia effettivamente attivo possiamo verificare al percorso dei servizi:
-                  <br>
-                  <i><strong>cd /lib/systemd/system/</strong></i>
-                  <br>
-                  <i><strong>ls -al</strong></i>
-                  <br>
+                  <pre>
+                    <code>
+$ sudo apt update
+$ sudo apt-get update
+$ sudo apt autoremove
+                  </code>
+                </pre>
+                  Per sicurezza, rimuoviamo anche le possibili vecchie versioni di Docker. Successivamente
+                  installiamo Docker, una volta completato il download, facciamo in modo che il servizio
+                  Docker parta ad ogni riavvio della macchina:
+                  <pre>
+                    <code>
+$ sudo apt-get remove docker docker-engine docker.io
+$ sudo apt-get install docker.io
+$ sudo systemctl start docker
+$ sudo systemctl enable docker
+                    </code>
+                  </pre>
+                  Possiamo controllare la versione di Docker tramite:
+                  <pre>
+                    <code>
+$ docker -v
+                    </code>
+                  </pre>
+                  Possiamo verificare al percorso dei servizi che docker sia effettivamente attivo:
+                  <pre>
+                    <code>
+$ cd /lib/systemd/system/
+$ lib/systemd/system ls -al
+                    </code>
+                  </pre>
                   Tra tutti i vari servizi presenti nella lista, dovremmo vederne due:
-                  <br>
                   <i>docker.socket</i>
-                  <br>
-                  <i>docker.socket</i>
-
+                  e
+                  <i>docker.io</i>
                 </p>
-
-                <h4>Conclusione</h4>
+                <hr>
+                <strong>Operazioni conclusive</strong>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Per evitare di avere problemi di permessi nell'esecuzione di Docker, conviene seguire i consigli di post installazione
+                  della <a href="https://docs.docker.com/install/linux/linux-postinstall/">documentazione ufficiale</a>.
+                  Per cui, diamo ancora alcuni ordini al nostro sistema, creando un gruppo per docker, cui aggiungeremo il nostro utente, e garantendogli permessi da superuser.
+                  <pre>
+                    <code>
+$ sudo groupadd docker
+$ sudo usermod -aG docker $USER
+                    </code>
+                  </pre>
+                </p>
+                <hr>
+                <strong>Conclusione</strong>
                 <hr>
                 <p class="mb-5" style="text-align: justify;">
                   Abbiamo installato ed avviato il servizio docker.io sulla nostra macchina Linux, ora siamo pronti per cominciare a utilizzare dei container.
@@ -100,20 +117,6 @@
                 </p>
               </div>
             </div>
-            <hr>
-            <a href="01_introduzione.html" style="align-self: right;">
-                <button class="btn btn-light" >
-                 <img src="https://img.icons8.com/ultraviolet/40/000000/left-squared.png"><br>
-                 <strong>Introduzione a Docker</strong>
-                </button>
-            </a>
-            <a href="03_scaricare_container.html" style="align-self: right;">
-                <button class="btn btn-light" >
-                 <img src="https://img.icons8.com/ultraviolet/40/000000/right-squared.png"><br>
-                 <strong>Scaricare ed eseguire un container</strong>
-                </button>
-            </a>
-
     </div>
   </section>
 
