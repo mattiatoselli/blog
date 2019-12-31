@@ -40,167 +40,72 @@
         <div class="row justify-content-center">
               <div class="col-lg-8">
                 <!-- Portfolio Modal - Text -->
-                <h4>Applicazioni monolitiche: un annoso problema</h4>
+                <h4>Come una macchina virtuale, ma senza i difetti della macchina virtuale</h4>
                 <hr>
                 <p class="mb-5" style="text-align: justify;">
-                  <strong>Rifacciamoci alla descrizione che da RedHat sul suo sito:</strong> <br>
-                  <i>
-                  I microservizi sono un approccio architetturale alla realizzazione di applicazioni.
-                  Quello che distingue l'architettura basata su microservizi dagli approcci monolitici tradizionali
-                  è la suddivisione dell'app nelle sue funzioni di base.
-                  Ciascuna funzione, denominata servizio, può essere compilata e implementata in modo indipendente.
-                  Pertanto, i singoli servizi possono funzionare, o meno, senza compromettere gli altri.
-                  </i>
                   <br>
-                  <br>
-                  Facciamola semplice e vediamo un esempio: immaginiamoci di essere dei Project manager che lavorano
-                  in una azienda software italiana. Una commessa da una corporation molto grossa, arrivataci circa all'inizio degli anni 90
-                  ci chiede di creare un gestionale per loro.
-                  Secondo quelli che erano i pattern di quegli anni, l'applicazione avrà una struttura <i>monolitica</i>. cosa significa?
-                  Significa che avremmo messo su un server (o magari più di uno) LAMP (Linux, Apache, MySQL, PHP), e creato le nostre applicazioni dentro di essi, ad ogni richiesta di aggiornamento, si testava il tutto, si mandava in produzione il codice
+                  Secondo un pattern consolidato agli albori della programmazione web, la maggioranza delle applicazioni aveva una struttura <i>monolitica</i>. cosa significa?
+                  Significa che poggiano su un ambiente LAMP (Linux, Apache, MySQL, PHP), su cui viene creata una applicazione, ad ogni richiesta di aggiornamento, si testava il tutto, si mandava in produzione il codice
                   aggiornato, e si procedeva così.
+                  <hr>
+                  <strong>Compatibilità</strong>
+                  <hr>
+                  Il vantaggio di cambiare approccio e passare a Docker, è che abbiamo a disposizione le stesse funzionalità
+                  di una macchina virtuale.
+                  Siamo  cioè in grado di replicare perfettamente un determinato sistema.
+                  Non avremo quindi problemi di versioni, aggiornamenti dagli effetti imprevedibili,
+                  dipendenze non riconosciute, e altre amenità simili.
                   <br>
+                  Vogliamo passare da PHP 7 a 7.3 ma non sappiamo se qualcosa si spaccherà?
+                  Lo facciamo sul container in sviluppo, vediamo se tutto funziona, e se non funziona in due comandi
+                  distruggiamo il tutto e torniamo allo stato precedente.
+                   Se funziona, sul server non andiamo a deployare il nuovo codice, ma l'intero container.
+                  L'ulteriore vantaggio, come avremo modo di vedere, è che sono facilissimi da utilizzare,
+                  consumano pochissime risorse, sono sicuri, sono performanti, e ci permettono di
+                  sviluppare tranquillamente sul nostro portatile senza "sporcarlo".
                   <br>
-
-                  <strong>Quali sono i problemi di un approccio simile?</strong>
-                  <br>
-                  Tanti, anzi, troppi.
+                  Possiamo addirittura creare il nostro server LAMP senza nessun bisogno
+                  di installare nulla sulla nostra macchina, con un solo comando possiamo
+                  avviare, modificare, distruggere, replicare una intera infrastruttura, o
+                  avere intere reti di server sul nostro portatile senza alcun bisogno di
+                  installare alcunchè sul nostro sistema operativo.
                   <i>
-                    Il primo (che riguarda la vostra azienda) è che ogni sviluppo di nuove funzionalità vi
-                    porterà via parecchio tempo.
+                    Incredibile vero?
                   </i>
-                  Ogni rilascio in produzione dovrà essere infatti preceduto da un testing molto accurato, lungo, minuzioso e ben fatto.
-                  Questo porta ai vostri sviluppatori uno stress notevole, e uno sviluppatore stressato non produce, o produce male.
-                  Altro problema non indifferente: per il vostro progetto serviranno dei tester, degli ingegneri di Quality Assurance, e questo significa stipendi in più.
-                  <i>Come glielo spiegate al vostro titolare quando verrà a dirvi che il vostro reparto pesa tantissimo sul budget dell'azienda e che si sta pensando di tagliarlo?</i>
-                  <br>
-                  <br>
+                  <hr>
                   <strong>
-                    In tutto questo non abbiamo considerato nemmeno l'ipotesi più catastrofica:<br>
+                    Portabilità
                   </strong>
-                  cosa facciamo se nonostante tutti i test qualcosa dovesse "spaccare" l'ambiente di produzione?
-                  ovviamente, bisogna spegnere i server, ritornare allo stato precedente, far ripartire le macchine, e ritardare ulteriormente
-                  lo sviluppo. Possiamo permettercelo? Ovviamente no.
-                </p>
-
-
-              <h4>La soluzione: i microservizi</h4>
-                <hr>
-                <p class="mb-5" style="text-align: justify;">
-                  <img src="../img/monolithic-vs-microservices.png" alt="microservices vs monolithic schema" class="img-fluid">
-                  Pensa ad una applicazione per una azienda che abbia un e-commerce.
-                  Probabilmente avrai una barra di ricerca per sfogliare i prodotti.
-                  La ricerca costituisce un servizio. Potresti avere anche dei suggerimenti per i prodotti correlati,
-                  che sono basati su un database di preferenze dei clienti.
-                  Anche questo è un servizio. Carrello online con delle variabili di sessione che vengono salvate? Ovviamente è un altro servizio.
-                  <i>
-                    Pertanto, un microservizio è una funzione di base di un'applicazione, che viene eseguita indipendentemente
-                  dagli altri servizi.
-                  </i>
-                  <br>
-                  <br>
-                  <strong>
-                    Quali sono i vantaggi?
-                  </strong>
-                  <br>
-                  Ve ne sono diversi, sia a lungo che a breve termine.
-                  <br>
-                  <br>
-                  <strong>
-                    1) E' possibile parallelizzare lo sviluppo di più funzionalità su diversi team, che avranno la possibilità
-                    di doversi concentrare solo su un unico compito, quindi tanti piccoli team, ognuno specializzato, ognuno con un compito più piccolo.
-                  </strong>
-                  ciò significa completamento più rapido delle commesse, team specializzati, veloci ed efficienti.
-                  <br>
-                  <br>
-                  <strong>
-                    2) Ogni servizio è slegato dagli altri.
-                </strong>
-                    Significa che un temporaneo malfunzionamento della barra di ricerca del nostro e-commerce di esempio precedente, non manderà
-                    in crash l'intero sistema, ma sarà temporaneamente inutilizzabile fino a quando il team che se ne occupa non lo avrà sistemato, ma il resto del nostro e-commerce
-                    resterà in piedi.
-                    <br>
-                    <br>
-                    <strong>
-                      3) Scalabile, sviluppo agile.
-                  </strong>
-                      Ogni modifica sarà più veloce perchè si andranno a fare delle leggere modifiche solo al servizio corrispondente.
-                      Lo sviluppo di nuove funzionalità sarà più immediato e rapido, inoltre in qualunque momento ognuno dei servizi potrà essere ottimizzato
-                      o potranno essergli allocate più risorse. Il nostro e-commerce cresce molto e ha bisogno di aumentare le risorse perchè i server che si occupano
-                      di immagazzinare le preferenze degli utenti sono sovraccaricati? In qualunque momento possiamo decidere di aumentarne la potenza destinata solo a quel singolo servizio.
-                </p>
-
-                <h4>Container Linux e Docker: sicuri, veloci, semplici</h4>
-                <hr>
-                <p class="mb-5" style="text-align: justify;">
-                  Immagina di sviluppare un'applicazione. Lavori su un portatile e il tuo ambiente presenta una configurazione specifica.
-                  Altri sviluppatori potrebbero utilizzare configurazioni leggermente diverse.
-                  L'applicazione che stai sviluppando dipende da tale configurazione, oltre che da specifiche librerie, dipendenze e file.
-                  Al tempo stesso, gli ambienti di sviluppo e produzione della tua azienda presentano
-                  le proprie configurazioni standardizzate con set di file di supporto specifici. Desideri emulare tali
-                  ambienti il più possibile localmente, ma senza tutti i costi derivanti dalla creazione di nuovi ambienti server.
-                  A questo punto, è necessario trovare un modo semplice per far funzionare la tua app in questi ambienti,
-                  superare i controlli qualità e ottenere il deployment,
-                  senza dover riscrivere l'applicazione e correggere errori. In questo caso, i container sono la soluzione ideale.
-                  <br>
-                  <br>
-                  <strong>
-                    Il container che ospita la tua applicazione presenta le librerie, le dipendenze e i file necessari,
-                  il che ti consente di passare fino all'ambiente di produzione,
-                  senza alcun impatto negativo. Infatti, il contenuto di un'immagine container può essere paragonato
-                  all'installazione di una distribuzione Linux
-                </strong>
-                  poiché include pacchetti,
-                  file di configurazione e così via. La distribuzione di un'immagine container è,
-                  tuttavia, molto più semplice dell'installazione di nuove copie dei sistemi operativi (o di macchine virtuali).
-                  I container consentono di prevenire problemi.
-                  <br>
-                  <br>
-                  C'è di più: Rispetto alle macchine virtuali, un container Linux in esecuzione utilizza le risorse in modo meno intensivo,
-                  nel primo caso infatti, una macchina virtuale prende delle risorse dal sistema di host per replicare l'hardware ed eseguire un sistema operativo parallelo.
-                  Nel secondo, uno o più container condividono il kernel della macchina ospitante, ma lanciano una serie di processi e demoni completamente isolati dalla macchina ospitante.
-                  Mi rendo conto che tutto questo possa sembrare un argomento complicato (e lo è), ma <strong>al netto della teoria, quali sono i vantaggi pratici?</strong>
-                  <br>
-                  <strong>
-                    Anzitutto: un consumo minore di risorse e la portabilità, oltre alla semplicità con cui i container possono essere creati e distrutti.
-                  </strong>
-                  Creare, distruggere o modificare un container Linux è un processo facile e velocissimo, possiamo scegliere di rendere i cambiamenti
-                  effettivi fatti su un container, oppure distruggerlo e ricreare un ambiente completamente nuovo, il tutto in
-                  pochissimi secondi e con due comandi da terminale.
-                  <br>
-                  <strong>
-                    Tutta la potenza e la sicurezza di Linux.
-                  </strong>
-                  <br>
-                  <img src="../img/linux_power.jpg" alt="linux power" class="img-fluid">
-                  <br>
+                  <hr>
                   I container sfruttano la potenza di Linux e la sua portabilità, possono esser fatti girare senza alcun problema su qualunque sistema operativo
                   (anche Mac O Windows), con performance uguali a quelle native della macchina ospitante.
-                </p>
-
-                <h4>Docker: la balena leggerissima</h4>
-                <hr>
-                <img src="../img/docky.jpeg" alt="docker balena con simbolo golang e linux" class="img-fluid">
-                <p class="mb-5" style="text-align: justify;">
-                  Docker è un progetto open source che permette di gestire container Linux, fonìrnisce delle API molto ad alto livello per
-                  la loro gestione, il vantaggio è che è un software molto leggero scritto in golang, e che si integra perfettamente con tutti i servizi maggiori di cloud hosting mondiali.
-                  <br>
-                  <br>
+                  Docker è un progetto open source, ed il fatto che lo sia non è da sottovalutare, perchè siginifica che è in costante miglioramento e che non rischia di essere abbandonato in caso di interessi da parte di una grande compagnia.
+                  E' scritto in Go, un linguaggio che supporta molto bene la concorrenza dei thread e dei processi, e che sopratutto gira su tutti i sistemi operativi.
+                  Ultimo, ma non meno importante: tutti i servizi di hosting cloud mondiali (AWS, Azure, Digital Ocean, Google) supportano ed anzi incoraggiano il deploy delle proprie applicazioni con Docker.
+                  <hr>
                   <strong>
-                    Questo ci porta alla conclusione della prima parte!
+                    Leggerezza di una balena
                   </strong>
-                  Abbiamo visto quali sono i vantaggi di una architettura a microservizi, cosa sono i container Linux, i loro vantaggi, e introdotto nella scena un software per la loro gestione. Nei prossimi capitoli, vedremo come scaricare Docker su una macchina Linux,
-                  e prenderemo dimistichezza coi primi comandi.
+                  <hr>
+                  Ok, lo ammetto, non ho saputo resistere alla battuta sul simbolo di Docker.
+                  Scherzi a parte, stiamo dicendo una cosa importantissima.
+                  Rispetto alle macchine virtuali, un container Linux in esecuzione utilizza le risorse in modo meno intensivo,
+                  nel primo caso infatti, una macchina virtuale prende delle risorse dal sistema di host per replicare l'hardware ed eseguire un sistema operativo parallelo.
+                  Nel secondo, uno o più container condividono il kernel della macchina ospitante, ma lanciano una serie di processi e demoni completamente isolati dalla macchina ospitante.
+                  Questo significa che gli ambienti di sviluppo possono essere costruiti anche su macchine meno performanti, e che in produzione le istanze saranno meno pesanti per la CPU ( e quindi per le nostre tasche).
+                  Generalmente i container infatti utilizzano Linux Alpine, un sistema operativo minimale che occupa circa 65-80 MB su disco, equipaggiato solo con i pacchetti e processi minimi che gli servono a fornire il servizio per cui nasce quel container.
+                  <hr>
+                  <strong>
+                    Sicurezza
+                  </strong>
+                  <hr>
+                  Non solo singoli container, ma intere reti locali possono essere lanciate sul nostro computer, e la cosa interessante è che queste reti di container sono completamente chiuse rispetto all'esterno, sono inattaccabili, non comunicano con l'esterno a meno che noi non gli apriamo specificatamente una porta, ed anche in quel caso, accetteranno solamente richieste
+                  da macchine che noi gli abbiamo specificato.
+                  Se prendiamo ad esempio il classico server LAMP, possiamo immaginare di avere tre container: uno con APACHE, che prende le richieste, uno con MySQL ed uno con PHP.
+                   Questi ultimi due, potranno essere completamente blindati e potranno essere configurati in modo da accettare richieste provenienti solo dal container Apache, che invece sarà esposto all'esterno.
                 </p>
               </div>
             </div>
-            <hr>
-            <a href="02_installare_docker.html" style="align-self: right;">
-                <button class="btn btn-light" >
-                 <img src="https://img.icons8.com/ultraviolet/40/000000/right-squared.png"><br>
-                 <strong>Installare Docker</strong>
-                </button>
-                </a>
 
     </div>
   </section>
