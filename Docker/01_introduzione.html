@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>La sfida dei microservizi</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- Portfolio Section -->
+  <section class="page-section portfolio" id="portfolio" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <!-- Portfolio Modal - Text -->
+                <h4>Come una macchina virtuale, ma senza i difetti della macchina virtuale</h4>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  <br>
+                  Secondo un pattern consolidato agli albori della programmazione web, la maggioranza delle applicazioni aveva una struttura <i>monolitica</i>. cosa significa?
+                  Significa che poggiano su un ambiente LAMP (Linux, Apache, MySQL, PHP), su cui viene creata una applicazione, ad ogni richiesta di aggiornamento, si testava il tutto, si mandava in produzione il codice
+                  aggiornato, e si procedeva così.
+                  <hr>
+                  <strong>Compatibilità</strong>
+                  <hr>
+                  Il vantaggio di cambiare approccio e passare a Docker, è che abbiamo a disposizione le stesse funzionalità
+                  di una macchina virtuale.
+                  Siamo  cioè in grado di replicare perfettamente un determinato sistema.
+                  Non avremo quindi problemi di versioni, aggiornamenti dagli effetti imprevedibili,
+                  dipendenze non riconosciute, e altre amenità simili.
+                  <br>
+                  Vogliamo passare da PHP 7 a 7.3 ma non sappiamo se qualcosa si spaccherà?
+                  Lo facciamo sul container in sviluppo, vediamo se tutto funziona, e se non funziona in due comandi
+                  distruggiamo il tutto e torniamo allo stato precedente.
+                   Se funziona, sul server non andiamo a deployare il nuovo codice, ma l'intero container.
+                  L'ulteriore vantaggio, come avremo modo di vedere, è che sono facilissimi da utilizzare,
+                  consumano pochissime risorse, sono sicuri, sono performanti, e ci permettono di
+                  sviluppare tranquillamente sul nostro portatile senza "sporcarlo".
+                  <br>
+                  Possiamo addirittura creare il nostro server LAMP senza nessun bisogno
+                  di installare nulla sulla nostra macchina, con un solo comando possiamo
+                  avviare, modificare, distruggere, replicare una intera infrastruttura, o
+                  avere intere reti di server sul nostro portatile senza alcun bisogno di
+                  installare alcunchè sul nostro sistema operativo.
+                  <i>
+                    Incredibile vero?
+                  </i>
+                  <hr>
+                  <strong>
+                    Portabilità
+                  </strong>
+                  <hr>
+                  I container sfruttano la potenza di Linux e la sua portabilità, possono esser fatti girare senza alcun problema su qualunque sistema operativo
+                  (anche Mac O Windows), con performance uguali a quelle native della macchina ospitante.
+                  Docker è un progetto open source, ed il fatto che lo sia non è da sottovalutare, perchè siginifica che è in costante miglioramento e che non rischia di essere abbandonato in caso di interessi da parte di una grande compagnia.
+                  E' scritto in Go, un linguaggio che supporta molto bene la concorrenza dei thread e dei processi, e che sopratutto gira su tutti i sistemi operativi.
+                  Ultimo, ma non meno importante: tutti i servizi di hosting cloud mondiali (AWS, Azure, Digital Ocean, Google) supportano ed anzi incoraggiano il deploy delle proprie applicazioni con Docker.
+                  <hr>
+                  <strong>
+                    Leggerezza di una balena
+                  </strong>
+                  <hr>
+                  Ok, lo ammetto, non ho saputo resistere alla battuta sul simbolo di Docker.
+                  Scherzi a parte, stiamo dicendo una cosa importantissima.
+                  Rispetto alle macchine virtuali, un container Linux in esecuzione utilizza le risorse in modo meno intensivo,
+                  nel primo caso infatti, una macchina virtuale prende delle risorse dal sistema di host per replicare l'hardware ed eseguire un sistema operativo parallelo.
+                  Nel secondo, uno o più container condividono il kernel della macchina ospitante, ma lanciano una serie di processi e demoni completamente isolati dalla macchina ospitante.
+                  Questo significa che gli ambienti di sviluppo possono essere costruiti anche su macchine meno performanti, e che in produzione le istanze saranno meno pesanti per la CPU ( e quindi per le nostre tasche).
+                  Generalmente i container infatti utilizzano Linux Alpine, un sistema operativo minimale che occupa circa 65-80 MB su disco, equipaggiato solo con i pacchetti e processi minimi che gli servono a fornire il servizio per cui nasce quel container.
+                  <hr>
+                  <strong>
+                    Sicurezza
+                  </strong>
+                  <hr>
+                  Non solo singoli container, ma intere reti locali possono essere lanciate sul nostro computer, e la cosa interessante è che queste reti di container sono completamente chiuse rispetto all'esterno, sono inattaccabili, non comunicano con l'esterno a meno che noi non gli apriamo specificatamente una porta, ed anche in quel caso, accetteranno solamente richieste
+                  da macchine che noi gli abbiamo specificato.
+                  Se prendiamo ad esempio il classico server LAMP, possiamo immaginare di avere tre container: uno con APACHE, che prende le richieste, uno con MySQL ed uno con PHP.
+                   Questi ultimi due, potranno essere completamente blindati e potranno essere configurati in modo da accettare richieste provenienti solo dal container Apache, che invece sarà esposto all'esterno.
+                </p>
+              </div>
+            </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <!-- Footer Location -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Contattami</h4>
+          <p class="lead mb-0">toselli.mattia@gmail.com</p>
+        </div>
+
+        <!-- Footer Social Icons -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Seguimi</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+
+        <!-- Footer About Text -->
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Risorse utili</h4>
+          <p class="lead mb-0">Temi Bootstrap:
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <p class="lead mb-0">Guida ufficiale Laravel:
+            <a href="https://laravel.com/docs/4.2/introduction">Laravel docs</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; HCT Solutions 2019. Tutti i diritti riservati.</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>

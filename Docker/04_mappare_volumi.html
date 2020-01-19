@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Mappare i volumi in Docker</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <section class="page-section portfolio" id="portfolio" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <hr>
+                <strong>Mappare la cartella pubblica di Nginx</strong>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Poichè i container sono effettivamente delle macchine Linux, possiamo accedere ad esse e lanciare dei
+                  comandi da terminale senza effettivamente entrare dentro al container, o addirittura accedere ad una shell interna, come se ci connettessimo ad una macchina esterna
+                  con protocollo ssh.
+                  Prima di tutto assicuriamoci di stoppare tutti i container ed eliminarli tutti, tramite i comandi:
+                </p>
+                <pre>
+                  <code>
+$ docker ps -al
+$ docker rm [id container]
+                  </code>
+                </pre>
+                <p class="mb-5" style="text-align: justify;">
+                Questa volta, avviamo un container Nginx ma con un comando leggermente diverso.
+                </p>
+                <pre>
+                  <code>
+$ docker run --name nginx-static -d -p 8088:80 -v ~/nginx/content:/usr/share/nginx/html:ro nginx
+                  </code>
+                </pre>
+                <p class="mb-5" style="text-align: justify">
+                  Gran parte del comando la conosciamo già dalle nostre precedenti esperienze, la parte che ci interessa è quella che segue il flag -v.
+                  Stiamo specificando a Docker come mappare una determinata cartella con il nostro sistema tramite la sintassi:
+                  <i>
+                    [percorso host]:[percorso container]:[permesso di sola lettura, opzionale].
+                  </i>
+                  Se le cartelle specificate non sono presenti nel nostro filesystem, verranno create, bisogna solo fare attenzione al fatto che verranno create con proprietà
+                  del gruppo e dell'utente root, quindi potremmo non avere i permessi necessari per editarle.
+                  Se invece sono già presenti, non ci saranno problemi.
+                  Un rapido cambio di proprietà ricorsivo risolverà ogni questione, nel dubbio.
+                </p>
+                <pre>
+                  <code>
+$ cd ~
+$ sudo chown user:user -R nginx
+                  </code>
+                </pre>
+                <p class="mb-5" style="text-align: justify">
+                Se provassimo ora a visitare l'indirizzo locale sulla porta 8088, a differenza del caso precedente in cui ci accoglieva la schermata
+                iniziale di Nginx, riceveremmo solo un bruttissimo messaggio di errore, come mai?
+                Il server Nginx si aspetta di trovare un determinato file da cui iniziare il percorso, per sapere quale però dobbiamo visualizzare il file di configurazione.
+                Tale file si trova all'interno del container, ma è inaccessibile all'esterno, come lo raggiungiamo?
+                </p>
+                <hr>
+                <strong>Avviare una bash interna ai container</strong>
+                <hr>
+                <p class="mb-5" style="text-align: justify">
+                  Obiettivo: vogliamo andare a leggere un certo file di configurazione di default del nostro container Nginx.
+                  Sappiamo, leggendo la documentazione ufficiale su DockerHub (l'avete letta, vero?!), che il file di configurazione si chiama
+                  <i>
+                    default.conf
+                  </i>
+                  Come lo vediamo? Potremmo stoppare il container, eliminarlo, mappare la cartella di configurazione e scrivere un nostro file di configurazione.
+                  Lo faremo in un futuro, quando creeremo il nostro ambiente di sviluppo, ma per una questione di sicurezza, sarebbe opportuno mantenerlo interno al container.
+                  Dobbiamo quindi lanciare una shell interna, navigare fino al file ed aprirlo.
+                </p>
+                <pre>
+                  <code>
+$ docker exec -it [id o nome container] bash
+$ cd etc/nginx/conf
+$ cat default.conf
+
+server {
+    listen       80;
+    server_name  localhost;
+
+    #charset koi8-r;
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    #
+    #location ~ \.php$ {
+    #    proxy_pass   http://127.0.0.1;
+    #}
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    #location ~ \.php$ {
+    #    root           html;
+    #    fastcgi_pass   127.0.0.1:9000;
+    #    fastcgi_index  index.php;
+    #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+    #    include        fastcgi_params;
+    #}
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+}
+
+                  </code>
+                </pre>
+                <p class="mb-5" style="text-align: justify;">
+                  Come possiamo vedere, il file di ingresso del nostro server di sviluppo si dovrà chiamare index.html.
+                  Volendo, potremmo anche editare questo file con un qualunque editor di testo, lascio qui una serie di comandi utili per poter utilizzare nano in caso vogliate farlo, anche se in questo tutorial assumeremo che non venga fatto.
+                </p>
+                <pre>
+                  <code>
+$ apt-update
+$ apt-get install nano
+$ nano default.conf
+                  </code>
+                </pre>
+                <p class="mb-5" style="text-align: justify;">
+                  limitiamoci ad uscire dal container tramite il comando
+                  <i>exit</i>.
+                  Una volta fuori, creiamo nella nostra cartella scelta come radice pubblica un file index.html.
+                  Se ci rechiamo nuovamente all'indirizzo locale, alla porta 8088, vedremo che questa volta la richiesta viene soddisfatta, e possiamo vedere la nostra pagina web.
+                </p>
+                <hr>
+                <strong>Salvare una immagine personalizzata di un container</strong>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Se nella sezione precedente avete provato ad installare nano, magari vi piacerebbe poter avere la vostra immagine personalizzata
+                  del container con incluso il vostro editor di testo già pronto.
+                  Quello che purtroppo succede invece, è che quando doveste stoppare il container per poi riavviarlo, esso tornerebbe allo stato iniziale.
+                  Supponiamo di aver creato un container con una serie di pacchetti utili, magari abbiamo anche dovuto compilarne qualcuno per un ipotetico ambiente di produzione.
+                  Ci piacerebbe poterne salvare una immagine, in modo da averne una pronta la prossima volta che avviamo il container, e magari anche per poterla salvare su una chiavetta e darla a qualcuno.
+                  Se vogliamo salvare un file scompattabile possiamo utilizzare il seguente comando:
+                </p>
+                <pre>
+                  <code>
+$ docker save [nome container] > [nome container].tar
+                  </code>
+                </pre>
+                <p class="mb-5" style="text-align: justify;">
+                  A questo punto avremo nella cartella in cui ci troviamo un pratico scompattabile da poter utilizzare quando vogliamo e da poter sempre portare con noi all'occorrenza.
+                  Scompattando tale file, avremo nel nostro sistema una immagine che sarà una esatta replica di quel determinato container. L'unica cosa di cui dovremo avere cura, è che il container sia attivo quando lanciamo il comando di salvataggio.
+                </p>
+              </div>
+            </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <!-- Footer Location -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Contattami</h4>
+          <p class="lead mb-0">toselli.mattia@gmail.com</p>
+        </div>
+
+        <!-- Footer Social Icons -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Seguimi</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+
+        <!-- Footer About Text -->
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Risorse utili</h4>
+          <p class="lead mb-0">Temi Bootstrap:
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <p class="lead mb-0">Guida ufficiale Laravel:
+            <a href="https://laravel.com/docs/4.2/introduction">Laravel docs</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; HCT Solutions 2019. Tutti i diritti riservati.</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>

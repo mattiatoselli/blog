@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Comandi basilari di Docker</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <section class="page-section portfolio" id="portfolio" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <p class="mb-5" style="text-align: justify;">
+                  In questo primo esempio scenderemo nel pratico e approfitteremo per familiarizzare con Docker.
+                  Impareremo a scaricare container, inizializzarli, resettarli e distruggerli.
+                </p>
+                <hr>
+              <strong>Immagini e containers</strong>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Quando scarichiamo una "macchina docker", oppure ci viene passato un file contenente una
+                  macchina virtualizzata, stiamo parlando di una immagine.
+                  <strong>
+                  L'immagine è come un blueprint di un container,
+                  definisce come sarà tale macchina.
+                </strong>
+                  Essa è residente nel nostro computer, a meno che non decidiamo di eliminarla.
+                  Immaginiamo per esempio di scaricare Nginx, una volta che abbiamo la nostra
+                  <strong>immagine di Nginx</strong> possiamo avviarne una istanza in
+                  ascolto su qualche porta dell'host, l'istanza è un container, ma possiamo
+                  decidere di avviarne anche più di una istanza, in quel caso la nostra immagine rimane sempre una (Nginx, appunto),
+                  ma avremo più containers con la stessa immagine.
+                  <strong>Per intenderci, è un po' come la differenza tra un oggetto ed una istanza di un oggetto nei paradigmi di programmazione ad oggetti.</strong><br>
+                  Vediamo subito di cosa sto parlando.
+                </p>
+                <hr>
+                <strong>Scaricare ed eseguire immagini Docker da DockerHub</strong>
+                  <hr>
+                  <p class="mb-5" style="text-align: justify;">
+                    DockerHub è un servizio di repository open source dove tutti possono caricare e scaricare immagini già pronte.
+                    Come potete ben immaginare, la soluzione migliore è partire da delle macchine standard, e poi creare ciò che serve a noi.
+                    Il sito è facilmente consultabile e tramite una barra di ricerca possiamo cercare cosa vogliamo.
+                    Iniziamo procurandoci una immagine di Nginx.
+                    Per qualunque problema vi consiglio di consultare la
+                    <a href="https://hub.docker.com/_/nginx">documentazione ufficiale.</a>
+                    <pre>
+                      <code>
+$ docker pull nginx
+                      </code>
+                    </pre>
+                    Una volta completate tutte le operazioni di scaricamento, possiamo fare un rapido controllo delle immagini presenti nel nostro sistema tramite:
+                    <pre>
+                      <code>
+$ docker images -a
+                      </code>
+                    </pre>
+                    <br>
+                    Dovremmo vederne solo una presente.
+                    Possiamo quindi iniziare a prendere
+                    dimistichezza con la sintassi dei comandi Docker.
+                    Una rapida occhiata alla documentazione
+                    dovrebbe essere sufficiente per iniziare, ma esistono alcuni trucchetti che si imparano
+                    con l'esperienza.
+                    Non ci addentreremo troppo nei tecnicismi riguardanti Nginx in questo corso,
+                    sarà oggetto dei prossimi capitoli, e forse, di futuri tutorial dedicati.
+                    Avviamo il container.
+                    <pre>
+                      <code>
+$ docker run --name nginx001 -d -p 8080:80 nginx
+                      </code>
+                    </pre>
+                       Stiamo dicendo a Docker di avviare un container dall'immagine nginx e chiamare tale container con un nome opzionale nginx001, e mappare la porta 80 (http) con una delle nostre porte libere,
+                       in questa caso la 8080.
+                       Una rapida visita tramite browser al nostro ip locale:
+                       http://localhost:8080, ci presenterà la pagina di benvenuto del server.
+                       Una volta verificato che il nostro container funziona, possiamo stopparlo tramite il comando:
+                       <pre>
+                         <code>
+$ docker stop nginx001
+                         </code>
+                       </pre>
+                      come risposta a questo comando ci verrà restituito il nome del container, se proviamo a reinviare la richiesta sulla porta 8080, vedremo che il server infatti non risponde.
+                    </p>
+                    <hr>
+                    <strong>Conclusione</strong>
+                    <hr>
+                    <p class="mb-5" style="text-align: justify;">
+                      In questo tutorial abbiamo fornito una prima conoscenza basilare di Docker, abbiamo preso confidenza col concetto di
+                      container ed immagine. Nel prossimo capitolo impareremo a mappare il nostro container con il filesystem del nostro computer.
+                      Per qualunque chiarimento, comunque, vi invito a consultare la documentazione ufficiale <a href="https://docs.docker.com/get-started/">disponibile qui.</a>
+                    </p>
+              </div>
+            </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <!-- Footer Location -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Contattami</h4>
+          <p class="lead mb-0">toselli.mattia@gmail.com</p>
+        </div>
+
+        <!-- Footer Social Icons -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Seguimi</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+
+        <!-- Footer About Text -->
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Risorse utili</h4>
+          <p class="lead mb-0">Temi Bootstrap:
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <p class="lead mb-0">Guida ufficiale Laravel:
+            <a href="https://laravel.com/docs/4.2/introduction">Laravel docs</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; HCT Solutions 2019. Tutti i diritti riservati.</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>

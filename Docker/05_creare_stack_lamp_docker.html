@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Creare uno stack LNMP in Docker</title>
+
+  <!-- Custom fonts for this theme -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+  <!-- Theme CSS -->
+  <link href="../css/freelancer.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="../index.html">Home</a>
+      <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <section class="page-section portfolio" id="portfolio" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <hr>
+                <strong>Installare Docker-compose</strong>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Prima di proseguire nel tutorial, assicuriamoci di aver installato Docker compose, si tratta di uno strumento
+                  utile a definire reti di container e connetterle tra di loro, ci permette di definire infrastrutture, anche complesse, tramite un unico file testuale, presto ci arriveremo.
+                  In questo tutorial assumeremo di avere già una buona conoscenza di come funziona Docker, perlomeno per quanto riguarda le basi, altrimenti, se non conosci Docker, ti consiglierei di consultare rapidamente <a href="../index.html#docker">questa guida</a>,
+                  nel giro di un'ora dovresti essere in grado di padroneggiarlo.
+                </p>
+                <pre>
+                  <code>
+$ sudo apt-get install docker-compose
+                  </code>
+                </pre>
+                <hr>
+                <strong>
+                  Scegliere le immagini corrette
+                </strong>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Quando dobbiamo sviluppare una infrastruttura di questo tipo, e abbiamo in mente che cosa ci serve,
+                  il consiglio è sempre quello di prendersi un attimo di tempo per scegliere quali immagini vogliamo scaricare.
+                  E' vero, esistono tantissime immagini per qualunque cosa stiamo cercando, addirittura immagini già configurate con un sistema operativo e tutti e tre i servizi che ci servono montati in esse.
+                  Le cose da tenere in considerazione sono diverse:
+                  <ul>
+                    <li>Leggerezza della rete di container</li>
+                    <li>Documentazione esplicativa disponibile</li>
+                    <li>Sicurezza e serietà del gruppo o azienda che li ha sviluppati</li>
+                  </ul>
+                  Converrebbe sempre rivolgerci ad immagini ben documentate su DockerHub, possibilmente alle cui spalle ci sia una azienda o un gruppo di sviluppatori seri e capaci.
+                  <br>
+                  A meno che non abbiate altre esigenze, partire dalle immagini ufficiali, o quelle con Alpine Linux all'interno è sempre una buona idea. Ancora meglio alcune che mi sento di consigliare  sono quelle di un gruppo di ragazzi che ha tutta la mia ammirazione, che sono molto ben documentate e sopratutto sicure e performanti:
+                  <a href="https://webdevops.io/">WebDevOps</a>, o quelle di una azienda seria come <a href="https://bitnami.com/">Bitnami</a>.
+                </p>
+                <hr>
+                <strong>
+                  Creare uno stack LNMP tramite un file yaml
+                </strong>
+                <hr>
+                <p class="mb-5" style="text-align: justify;">
+                  Come si crea una rete di container? Il modo più veloce per farlo è attraverso
+                  un file yaml.
+                  In questi file, Docker si aspetta di trovare un progetto di come vogliamo che sia strutturata la nostra rete locale di container.
+                  Una volta lanciato il comando di costruzione, Docker si occuperà
+                  di gestire il resto una volta che gli avremo fornito il nostro "blueprint".
+                  Per prima cosa creiamo la cartella del nostro progetto, al suo interno abbiamo bisogno di un file testuale.
+                </p>
+                <pre>
+                  <code>
+$ cd ~
+$ mkdir lnmp-docker
+$ cd lnmp-docker
+$ touch docker-compose.yaml
+                  </code>
+                </pre>
+                <p class="mb-5" style="text-align: justify;">
+                  Si noti che il nome del file non è arbitrario, una volta lanciato il comando
+                  di costruzione, l'orchestratore di container si aspetta di trovare
+                  <u>esattamente</u> un file con il nome specificato sopra.
+                  Apriamo il file appena creato con un qualunque editor di testo, e copiamo il seguente codice:
+                </p>
+                <pre>
+                  <code>
+
+version: "3"
+ services:
+  web:
+  image: webdevops/php-nginx:alpine-php7
+  ports:
+  - "4500:80"
+  volumes:
+  - ./app:/app
+  container_name: "webservice"
+  restart: always
+  links:
+  - database
+
+ database:
+  image: mysql
+  command: --default-authentication-plugin=mysql_native_password
+  restart: always
+  environment:
+  MYSQL_ROOT_PASSWORD: example
+
+ adminer:
+  image: adminer
+  restart: always
+  ports:
+  - 8181:8080
+                  </code>
+                </pre>
+                <p class="mb-5" style="text-align: justify;">
+                  Tramite il file yaml, stiamo fornendo all'orchestratore di container la struttura della sottorete da lanciare
+                  all'interno della macchina utilizzando il nostro computer come host.
+                  Stiamo definendo tramite la parola services, una rete locale che sarà composta dai seguenti servizi:
+                  <ul>
+                    <li>Un servizio denominato web contentente una immagine php7-nginx Alpine.
+                      <a href="https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-nginx.html">
+                        Qui il link alla documentazione
+                      </a>
+                    </li>
+                    <li>Un servizio denominato database con un database MySql.</li>
+                    <li>Un servizio denominato Adminer, per poter monitorare il nostro container MySql con una comoda interfaccia grafica.</li>
+                  </ul>
+                  <i>image:</i> serve a definire l'immagine di partenza, il composer cerca nell'host se trova una immagine corrispondente a quella fornita, altrimenti ne
+                  cerca una su DockerHub.
+                  <br>
+                  <i>ports e volumes</i> sono comandi già noti, servono rispettivamente a mappare le porte aperte dei container con le nostre locali, e a mappare il nostro filesystem con quello dei container.
+                  <br>
+                  La direttiva <i>restart: always</i> indica al demone Docker che quella rete di container dovrà essere fatta ripartire ogni volta che è possibile.
+                  A meno di malfunzionamenti nei container, Docker ad ogni riavvio dell'host, o ad ogni interruzione del servizio, cercherà di far ripartire in background i servizi inclusi nel file.
+                </p>
+              </div>
+            </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center">
+    <div class="container">
+      <div class="row">
+
+        <!-- Footer Location -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Contattami</h4>
+          <p class="lead mb-0">toselli.mattia@gmail.com</p>
+        </div>
+
+        <!-- Footer Social Icons -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <h4 class="text-uppercase mb-4">Seguimi</h4>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-facebook-f"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-twitter"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-linkedin-in"></i>
+          </a>
+          <a class="btn btn-outline-light btn-social mx-1" href="#">
+            <i class="fab fa-fw fa-dribbble"></i>
+          </a>
+        </div>
+
+        <!-- Footer About Text -->
+        <div class="col-lg-4">
+          <h4 class="text-uppercase mb-4">Risorse utili</h4>
+          <p class="lead mb-0">Temi Bootstrap:
+            <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <p class="lead mb-0">Guida ufficiale Laravel:
+            <a href="https://laravel.com/docs/4.2/introduction">Laravel docs</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Copyright Section -->
+  <section class="copyright py-4 text-center text-white">
+    <div class="container">
+      <small>Copyright &copy; HCT Solutions 2019. Tutti i diritti riservati.</small>
+    </div>
+  </section>
+
+  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+  <div class="scroll-to-top d-lg-none position-fixed ">
+    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
+      <i class="fa fa-chevron-up"></i>
+    </a>
+  </div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact Form JavaScript -->
+  <script src="js/jqBootstrapValidation.js"></script>
+  <script src="js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/freelancer.min.js"></script>
+
+</body>
+
+</html>
